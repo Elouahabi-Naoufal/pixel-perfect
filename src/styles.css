@@ -53,7 +53,7 @@
   --popover: var(--paper);
   --popover-foreground: var(--ink);
   --primary: var(--blue);
-  --primary-foreground: var(--ink);
+  --primary-foreground: var(--paper);
   --secondary: var(--steel);
   --secondary-foreground: var(--ink);
   --muted: oklch(0.96 0.012 80);
