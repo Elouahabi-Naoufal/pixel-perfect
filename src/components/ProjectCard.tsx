@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import type { Project } from "@/lib/site";
 
 const NODES: [number, number][] = [[30, 30], [60, 80], [40, 100], [150, 30], [170, 70], [130, 90]];
-const coverBg = { pink: "bg-pink", peach: "bg-peach", paper: "bg-paper dot-grid" };
+const coverBg = { blue: "bg-blue", steel: "bg-steel", paper: "bg-paper dot-grid" };
 
 export function ProjectCover({ p, big }: { p: Project; big?: boolean | undefined }) {
   return (
@@ -31,7 +31,7 @@ export function ProjectCover({ p, big }: { p: Project; big?: boolean | undefined
         </div>
       )}
       {p.upcoming && (
-        <span className="absolute bottom-4 right-4 rotate-[-6deg] border-2 border-ink bg-peach px-3 py-1 font-mono text-xs">coming soon</span>
+        <span className="absolute bottom-4 right-4 rotate-[-6deg] border-2 border-ink bg-steel px-3 py-1 font-mono text-xs">coming soon</span>
       )}
     </div>
   );

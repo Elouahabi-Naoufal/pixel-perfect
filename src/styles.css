@@ -30,8 +30,8 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-pink: var(--pink);
-  --color-peach: var(--peach);
+  --color-blue: var(--blue);
+  --color-steel: var(--steel);
   --color-cream: var(--cream);
   --color-ink: var(--ink);
   --color-paper: var(--paper);
@@ -39,8 +39,8 @@
 
 :root {
   --radius: 0.25rem;
-  --pink: oklch(0.8 0.17 340);
-  --peach: oklch(0.82 0.13 60);
+  --blue: oklch(0.8 0.17 340);
+  --steel: oklch(0.82 0.13 60);
   --cream: oklch(0.987 0.012 80);
   --ink: oklch(0.205 0 0);
   --paper: oklch(1 0 0);
@@ -52,13 +52,13 @@
   --card-foreground: var(--ink);
   --popover: var(--paper);
   --popover-foreground: var(--ink);
-  --primary: var(--pink);
+  --primary: var(--blue);
   --primary-foreground: var(--ink);
-  --secondary: var(--peach);
+  --secondary: var(--steel);
   --secondary-foreground: var(--ink);
   --muted: oklch(0.96 0.012 80);
   --muted-foreground: var(--grey);
-  --accent: var(--peach);
+  --accent: var(--steel);
   --accent-foreground: var(--ink);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: var(--paper);

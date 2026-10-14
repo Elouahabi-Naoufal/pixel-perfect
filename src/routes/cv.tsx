@@ -20,7 +20,7 @@ function CV() {
     <section className="mx-auto max-w-3xl px-5 py-16">
       <div className="flex flex-wrap items-center justify-between gap-3 print:hidden">
         <Link to="/" className="font-mono text-sm hover:underline">← back</Link>
-        <button onClick={() => window.print()} className="btn bg-pink">Download as PDF</button>
+        <button onClick={() => window.print()} className="btn bg-blue">Download as PDF</button>
       </div>
       <article className="mt-8 border-2 border-ink bg-paper p-8 hard-shadow print:border-0 print:shadow-none">
         <h1 className="text-5xl font-bold">{SITE.name}</h1>
