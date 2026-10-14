@@ -17,9 +17,9 @@ export const Route = createFileRoute("/contact")({
 
 function Contact() {
   const links = [
-    { label: "Email", value: SITE.email, href: `mailto:${SITE.email}`, c: "bg-pink" },
+    { label: "Email", value: SITE.email, href: `mailto:${SITE.email}`, c: "bg-blue" },
     { label: "GitHub", value: "github.com", href: SITE.github, c: "bg-paper", ext: true },
-    { label: "LinkedIn", value: "linkedin.com", href: SITE.linkedin, c: "bg-peach", ext: true },
+    { label: "LinkedIn", value: "linkedin.com", href: SITE.linkedin, c: "bg-steel", ext: true },
   ];
   return (
     <section className="mx-auto max-w-6xl px-5 py-20">

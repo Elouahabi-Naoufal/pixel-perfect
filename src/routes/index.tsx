@@ -18,7 +18,7 @@ export const Route = createFileRoute("/")({
 
 const FLOATERS = [
   { t: "SELECT * FROM truth;", c: "bg-paper", pos: "left-[4%] top-[8%]", r: "-6deg" },
-  { t: "airflow.dag(15)", c: "bg-peach", pos: "right-[6%] top-[4%]", r: "5deg" },
+  { t: "airflow.dag(15)", c: "bg-steel", pos: "right-[6%] top-[4%]", r: "5deg" },
   { t: "p(match) = 0.97?", c: "bg-paper", pos: "right-[2%] top-[46%]", r: "-3deg" },
   { t: "docker compose up", c: "bg-ink text-paper", pos: "left-[8%] bottom-[10%]", r: "4deg" },
   { t: "# TODO: ship it", c: "bg-paper", pos: "right-[18%] bottom-[4%]", r: "-8deg" },
@@ -28,7 +28,7 @@ function Index() {
   const [a, b, ...rest] = PROJECTS as [typeof PROJECTS[number], typeof PROJECTS[number], ...typeof PROJECTS];
   return (
     <>
-      <section className="relative overflow-hidden border-b-2 border-ink bg-pink">
+      <section className="relative overflow-hidden border-b-2 border-ink bg-blue">
         <div className="mx-auto grid max-w-6xl gap-10 px-5 py-16 md:grid-cols-[1.4fr_1fr] md:py-24">
           <div>
             <p className="font-mono text-sm">{SITE.name} · Morocco</p>
@@ -47,7 +47,7 @@ function Index() {
             </div>
           </div>
           <div className="relative hidden min-h-[380px] md:block" aria-hidden>
-            <div className="absolute left-1/2 top-1/2 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-ink bg-peach" />
+            <div className="absolute left-1/2 top-1/2 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-ink bg-steel" />
             <div className="absolute left-[30%] top-[22%] h-24 w-24 rotate-12 border-2 border-ink bg-paper dot-grid" />
             <div className="absolute bottom-[22%] right-[26%] h-0 w-0 border-x-[40px] border-b-[70px] border-x-transparent border-b-ink" />
             {FLOATERS.map((f, i) => (
@@ -73,7 +73,7 @@ function Index() {
         </div>
       </section>
 
-      <section className="border-y-2 border-ink bg-peach">
+      <section className="border-y-2 border-ink bg-steel">
         <div className="mx-auto max-w-6xl px-5 py-16">
           <p className="font-mono text-sm">/currently-exploring</p>
           <div className="mt-6 grid gap-6 md:grid-cols-3">
@@ -91,7 +91,7 @@ function Index() {
         <h2 className="text-5xl font-bold md:text-7xl">Got messy data?</h2>
         <p className="mx-auto mt-4 max-w-md text-muted-foreground">I'm looking for a PFE internship or junior role in data, AI or MLOps — in Morocco or France.</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Link to="/contact" className="btn bg-pink">Get in touch</Link>
+          <Link to="/contact" className="btn bg-blue">Get in touch</Link>
           <Link to="/about" className="btn bg-paper">More about me</Link>
         </div>
       </section>

@@ -12,7 +12,7 @@ export type Project = {
   org: string;
   summary: string;
   tags: string[];
-  cover: "pink" | "peach" | "paper";
+  cover: "blue" | "steel" | "paper";
   context: string;
   approach: { title: string; body: string }[];
   stack: string[];
@@ -28,7 +28,7 @@ export const PROJECTS: Project[] = [
     summary:
       "Linking records that describe the same real-world entity across messy, heterogeneous datasets — so downstream analysis works on one trustworthy view.",
     tags: ["Python", "Splink", "DuckDB", "Entity Resolution", "Data Quality"],
-    cover: "pink",
+    cover: "blue",
     context:
       "Large administrative datasets rarely share clean identifiers. The same company or person can appear under different spellings, formats and partial fields. This project builds a pipeline that recognises those duplicates and consolidates them.",
     approach: [
@@ -47,7 +47,7 @@ export const PROJECTS: Project[] = [
     summary:
       "A batch data platform orchestrating 15 Airflow DAGs over distributed workers, feeding layered Snowflake warehouse models — all reproducible with Docker Compose.",
     tags: ["Python", "Airflow", "Snowflake", "Docker", "Data Engineering"],
-    cover: "peach",
+    cover: "steel",
     context:
       "Batch pipelines grow fast and become fragile without structure. This platform gives ingestion, transformation and loading a consistent, observable, reproducible home.",
     approach: [

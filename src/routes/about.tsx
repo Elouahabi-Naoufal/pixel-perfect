@@ -19,7 +19,7 @@ function About() {
   return (
     <>
       <section className="mx-auto grid max-w-6xl gap-10 px-5 py-20 md:grid-cols-[1fr_1.3fr]">
-        <h1 className="text-6xl font-bold md:text-8xl">Hi, I'm <span className="bg-pink px-2">Naoufal</span>.</h1>
+        <h1 className="text-6xl font-bold md:text-8xl">Hi, I'm <span className="bg-blue px-2">Naoufal</span>.</h1>
         <div className="space-y-5 text-lg leading-relaxed">
           <p>I'm a fifth-year Computer Engineering student specializing in AI and Data Science, based in Morocco.</p>
           <p>I like the unglamorous parts of data work: figuring out which records are really the same thing, making pipelines that run the same way every time, and building the plumbing that lets models actually reach people.</p>
@@ -32,7 +32,7 @@ function About() {
           <h2 className="text-5xl font-bold md:text-7xl">Toolkit</h2>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {TOOLKIT.map((g, i) => (
-              <div key={g.group} className={`border-2 border-ink p-5 ${i % 2 ? "bg-cream" : "bg-pink"}`}>
+              <div key={g.group} className={`border-2 border-ink p-5 ${i % 2 ? "bg-cream" : "bg-blue"}`}>
                 <p className="font-mono text-xs uppercase">{String(i + 1).padStart(2, "0")} / {g.group}</p>
                 <ul className="mt-4 space-y-1.5 font-display text-xl font-semibold">
                   {g.items.map((t) => <li key={t}>{t}</li>)}
