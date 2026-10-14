@@ -35,7 +35,7 @@ export const Route = createFileRoute("/work/$slug")({
 function CaseStudy() {
   const { project: p } = Route.useLoaderData();
   const idx = PROJECTS.findIndex((x) => x.slug === p.slug);
-  const next = PROJECTS[(idx + 1) % PROJECTS.length];
+  const next = PROJECTS[(idx + 1) % PROJECTS.length] ?? p;
   return (
     <article className="mx-auto max-w-5xl px-5 py-12">
       <Link to="/" hash="work" className="font-mono text-sm hover:underline">← all work</Link>

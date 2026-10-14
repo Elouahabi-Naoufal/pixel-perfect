@@ -1,20 +1,21 @@
 import { Link } from "@tanstack/react-router";
 import type { Project } from "@/lib/site";
 
+const NODES: [number, number][] = [[30, 30], [60, 80], [40, 100], [150, 30], [170, 70], [130, 90]];
 const coverBg = { pink: "bg-pink", peach: "bg-peach", paper: "bg-paper dot-grid" };
 
-export function ProjectCover({ p, big }: { p: Project; big?: boolean }) {
+export function ProjectCover({ p, big }: { p: Project; big?: boolean | undefined }) {
   return (
     <div className={`relative overflow-hidden border-b-2 border-ink ${coverBg[p.cover]} ${big ? "h-72 md:h-96" : "h-56"}`}>
       <span className="absolute left-4 top-3 font-display text-7xl font-bold md:text-8xl">{p.num}</span>
       {p.slug === "entity-resolution" && (
         <svg viewBox="0 0 200 120" className="absolute bottom-3 right-3 h-3/4" aria-hidden>
-          {[[30, 30], [60, 80], [40, 100], [150, 30], [170, 70], [130, 90]].map(([x, y], i) => (
+          {NODES.map(([x, y], i) => (
             <line key={i} x1={x} y1={y} x2={i < 3 ? 90 : 120} y2={60} stroke="currentColor" strokeWidth="2" />
           ))}
           <circle cx="90" cy="60" r="10" className="fill-ink" />
           <circle cx="120" cy="60" r="10" className="fill-paper" stroke="currentColor" strokeWidth="2" />
-          {[[30, 30], [60, 80], [40, 100], [150, 30], [170, 70], [130, 90]].map(([x, y], i) => (
+          {NODES.map(([x, y], i) => (
             <rect key={i} x={x - 6} y={y - 6} width="12" height="12" className="fill-paper" stroke="currentColor" strokeWidth="2" />
           ))}
         </svg>
@@ -36,7 +37,7 @@ export function ProjectCover({ p, big }: { p: Project; big?: boolean }) {
   );
 }
 
-export function ProjectCard({ p, big }: { p: Project; big?: boolean }) {
+export function ProjectCard({ p, big }: { p: Project; big?: boolean | undefined }) {
   return (
     <Link to="/work/$slug" params={{ slug: p.slug }} className="lift group block border-2 border-ink bg-card hard-shadow">
       <ProjectCover p={p} big={big} />

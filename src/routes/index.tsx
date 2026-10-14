@@ -25,7 +25,7 @@ const FLOATERS = [
 ];
 
 function Index() {
-  const [a, b, ...rest] = PROJECTS;
+  const [a, b, ...rest] = PROJECTS as [typeof PROJECTS[number], typeof PROJECTS[number], ...typeof PROJECTS];
   return (
     <>
       <section className="relative overflow-hidden border-b-2 border-ink bg-pink">
