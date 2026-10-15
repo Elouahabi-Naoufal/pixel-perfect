@@ -7,6 +7,15 @@ const coverBg = { blue: "bg-blue", steel: "bg-steel", paper: "bg-paper dot-grid"
 export function ProjectCover({ p, big }: { p: Project; big?: boolean | undefined }) {
   return (
     <div className={`relative overflow-hidden border-b-2 border-ink ${coverBg[p.cover]} ${big ? "h-72 md:h-96" : "h-56"}`}>
+      {p.photo && (
+        <img
+          src={p.photo}
+          alt={p.title}
+          className="absolute inset-0 h-full w-full object-cover"
+          loading="lazy"
+          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+        />
+      )}
       <span className="absolute left-4 top-3 font-display text-7xl font-bold md:text-8xl">{p.num}</span>
       {p.slug === "entity-resolution" && (
         <svg viewBox="0 0 200 120" className="absolute bottom-3 right-3 h-3/4" aria-hidden>
@@ -30,6 +39,9 @@ export function ProjectCover({ p, big }: { p: Project; big?: boolean | undefined
           <span className="border-2 border-ink bg-ink px-2 py-1 text-paper">15 DAGs →</span>
         </div>
       )}
+      {p.githubPlanned && (
+        <span className="absolute bottom-4 right-4 rotate-[-6deg] border-2 border-ink bg-steel px-3 py-1 font-mono text-xs">repo planned</span>
+      )}
       {p.upcoming && (
         <span className="absolute bottom-4 right-4 rotate-[-6deg] border-2 border-ink bg-steel px-3 py-1 font-mono text-xs">coming soon</span>
       )}
@@ -48,7 +60,16 @@ export function ProjectCard({ p, big }: { p: Project; big?: boolean | undefined 
         <div className="mt-4 flex flex-wrap gap-1.5">
           {p.tags.map((t) => <span key={t} className="tag">{t}</span>)}
         </div>
-        <p className="mt-5 font-display font-bold group-hover:underline">{p.upcoming ? "Peek at the slot →" : "Read case study →"}</p>
+        <div className="mt-5 flex items-center justify-between">
+          <p className="font-display font-bold group-hover:underline">{p.upcoming ? "Peek at the slot →" : "Read case study →"}</p>
+          {p.github && (
+            <span
+              className={`font-mono text-xs ${p.githubPlanned ? "text-muted-foreground" : "text-foreground"}`}
+            >
+              {p.githubPlanned ? "↗ planned repo" : "↗ github"}
+            </span>
+          )}
+        </div>
       </div>
     </Link>
   );

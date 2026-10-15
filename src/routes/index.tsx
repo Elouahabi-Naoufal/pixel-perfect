@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ProjectCard } from "@/components/ProjectCard";
-import { EXPLORING, PROJECTS, SITE } from "@/lib/site";
+import { ARCHIVE, EXPLORING, PROJECTS, SITE } from "@/lib/site";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -25,7 +25,8 @@ const FLOATERS = [
 ];
 
 function Index() {
-  const [a, b, ...rest] = PROJECTS as [typeof PROJECTS[number], typeof PROJECTS[number], ...typeof PROJECTS];
+  const FEATURED = PROJECTS.filter((p) => p.featured);
+  const [a, b, ...rest] = FEATURED as [typeof FEATURED[number], typeof FEATURED[number], ...typeof FEATURED];
   return (
     <>
       <section className="relative overflow-hidden border-b-2 border-ink bg-blue">
@@ -62,7 +63,7 @@ function Index() {
       <section id="work" className="mx-auto max-w-6xl scroll-mt-20 px-5 py-20">
         <div className="flex items-end justify-between gap-4">
           <h2 className="text-5xl font-bold md:text-7xl">Selected work</h2>
-          <p className="hidden font-mono text-sm text-muted-foreground md:block">{PROJECTS.length} listings</p>
+          <p className="hidden font-mono text-sm text-muted-foreground md:block">{PROJECTS.filter(p => p.featured).length} flagships</p>
         </div>
         <div className="mt-12 grid gap-8 md:grid-cols-5">
           <div className="md:col-span-3"><ProjectCard p={a} big /></div>
@@ -70,6 +71,46 @@ function Index() {
           {rest.map((p, i) => (
             <div key={p.slug} className={i === 0 ? "md:col-span-2" : "md:col-span-3 md:-mt-10"}><ProjectCard p={p} /></div>
           ))}
+        </div>
+      </section>
+
+      <section id="archive" className="border-y-2 border-ink bg-paper">
+        <div className="mx-auto max-w-6xl px-5 py-20">
+          <h2 className="text-5xl font-bold md:text-7xl">All projects</h2>
+          <p className="mt-4 max-w-xl text-muted-foreground">
+            Every project I've built, grouped by category. Click through for case studies.
+          </p>
+          <div className="mt-12 space-y-12">
+            {ARCHIVE.map((group) => (
+              <div key={group.category}>
+                <div className="flex items-baseline gap-3 border-b-2 border-ink pb-2">
+                  <h3 className="text-3xl font-bold">{group.category}</h3>
+                  <span className="font-mono text-sm text-muted-foreground">{group.slugs.length} projects</span>
+                </div>
+                <p className="mt-2 text-sm text-muted-foreground">{group.blurb}</p>
+                <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {group.slugs.map((slug) => {
+                    const p = PROJECTS.find((x) => x.slug === slug);
+                    if (!p) return null;
+                    return (
+                      <Link
+                        key={slug}
+                        to="/work/$slug"
+                        params={{ slug }}
+                        className="group flex items-center justify-between border-2 border-ink bg-card px-4 py-3 hover:bg-blue"
+                      >
+                        <div>
+                          <span className="font-mono text-xs text-muted-foreground">{p.num}</span>
+                          <p className="font-display font-semibold">{p.title}</p>
+                        </div>
+                        <span className="font-mono text-xs opacity-0 group-hover:opacity-100">→</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

@@ -53,6 +53,22 @@ function CaseStudy() {
             <p className="mt-5 font-mono text-xs uppercase">Stack</p>
             <ul className="mt-2 space-y-1 font-display font-semibold">{p.stack.map((s) => <li key={s}>{s}</li>)}</ul>
           </>)}
+          {p.github && (
+            <div className="mt-5 border-t-2 border-ink pt-4">
+              <p className="font-mono text-xs uppercase">Source</p>
+              <a
+                href={p.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 block font-mono text-sm hover:underline"
+              >
+                {p.githubPlanned ? "↗ github.com/… (planned)" : "↗ View on GitHub"}
+              </a>
+              {p.githubPlanned && (
+                <p className="mt-1 text-xs text-muted-foreground">Repository being prepared.</p>
+              )}
+            </div>
+          )}
         </aside>
       </div>
       {p.approach.length > 0 && (
