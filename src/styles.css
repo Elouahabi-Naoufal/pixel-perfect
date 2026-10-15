@@ -35,6 +35,10 @@
   --color-cream: var(--cream);
   --color-ink: var(--ink);
   --color-paper: var(--paper);
+  --color-amber: var(--amber);
+  --color-coral: var(--coral);
+  --color-green: var(--green);
+  --color-violet: var(--violet);
 }
 
 :root {
@@ -45,6 +49,10 @@
   --ink: oklch(0.2 0.04 262);
   --paper: oklch(1 0 0);
   --grey: oklch(0.52 0.02 255);
+  --amber: oklch(0.85 0.15 85);
+  --coral: oklch(0.68 0.16 30);
+  --green: oklch(0.72 0.13 150);
+  --violet: oklch(0.6 0.16 300);
 
   --background: var(--cream);
   --foreground: var(--ink);

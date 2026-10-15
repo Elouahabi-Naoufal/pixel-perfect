@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Naoufal · brutalist N monogram -->
+  <rect x="2" y="2" width="60" height="60" rx="10" fill="#3d50cc" stroke="#22242e" stroke-width="4"/>
+  <!-- N letter -->
+  <g fill="#ffffff">
+    <rect x="14" y="14" width="9" height="36" rx="1"/>
+    <polygon points="14,14 23,14 50,42 50,50 41,50 14,22"/>
+    <rect x="41" y="14" width="9" height="36" rx="1"/>
+  </g>
+  <!-- amber data-node dot -->
+  <circle cx="52" cy="12" r="6" fill="#f0c14b" stroke="#22242e" stroke-width="3"/>
+</svg>

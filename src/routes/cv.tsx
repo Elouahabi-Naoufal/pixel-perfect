@@ -5,7 +5,7 @@ export const Route = createFileRoute("/cv")({
   head: () => ({
     meta: [
       { title: "CV — Naoufal Elouahabi" },
-      { name: "description", content: "Résumé of Naoufal Elouahabi, Computer Engineering student in AI & Data Science." },
+      { name: "description", content: "Résumé of Naoufal Elouahabi, 5th-year student at EMSI (IIR) — Data Science & Artificial Intelligence." },
       { property: "og:title", content: "CV — Naoufal Elouahabi" },
       { property: "og:description", content: "Experience, projects and skills in data and AI engineering." },
       { property: "og:type", content: "profile" },
@@ -24,7 +24,7 @@ function CV() {
       </div>
       <article className="mt-8 border-2 border-ink bg-paper p-8 hard-shadow print:border-0 print:shadow-none">
         <h1 className="text-5xl font-bold">{SITE.name}</h1>
-        <p className="mt-2 font-mono text-sm text-muted-foreground">Computer Engineering · AI & Data Science · Morocco · {SITE.email}</p>
+        <p className="mt-2 font-mono text-sm text-muted-foreground">EMSI · IIR — Data Science &amp; AI · Morocco · {SITE.email}</p>
         <h2 className="mt-8 text-2xl font-bold">Experience & projects</h2>
         {PROJECTS.filter((p) => !p.upcoming).map((p) => (
           <div key={p.slug} className="mt-4">

@@ -1,5 +1,7 @@
 export const SITE = {
   name: "Naoufal Elouahabi",
+  role: "5th-year student at EMSI (IIR) — Data Science & Artificial Intelligence",
+  school: "École Marocaine des Sciences de l'Ingénieur · Tanger",
   email: "naoufal.elouahabi@emsi-edu.ma",
   github: "https://github.com/Elouahabi-Naoufal",
   linkedin: "https://www.linkedin.com/in/naoufal-elouahabi-53939",
@@ -14,6 +16,8 @@ export type ProjectCategory =
   | "Dev Tooling"
   | "Infrastructure";
 
+export type CoverColor = "blue" | "steel" | "paper" | "amber" | "coral" | "green" | "violet" | "ink";
+
 export type Project = {
   slug: string;
   num: string;
@@ -21,7 +25,7 @@ export type Project = {
   org: string;
   summary: string;
   tags: string[];
-  cover: "blue" | "steel" | "paper";
+  cover: CoverColor;
   context: string;
   approach: { title: string; body: string }[];
   stack: string[];
@@ -91,7 +95,7 @@ export const PROJECTS: Project[] = [
     summary:
       "End-to-end network intrusion detection on 3M+ CIC-IDS2017 records: three model families, Kafka streaming, Spark Structured Streaming, and a live dashboard.",
     tags: ["Python", "Kafka", "Spark", "XGBoost", "CNN-BiLSTM"],
-    cover: "blue",
+    cover: "steel",
     context:
       "Final-year capstone (PFA). The goal: detect network attacks in real time, not after the breach. The dataset — 8 daily PCAP-derived CSVs, 44 features, 15 classes (benign + 14 attack types) — demanded both accurate models and a streaming architecture.",
     approach: [
@@ -112,7 +116,7 @@ export const PROJECTS: Project[] = [
     summary:
       "27 messy Excel sheets → cleaned, modeled, and served as a star-schema warehouse with 10 Power BI dashboards and 50+ DAX KPIs.",
     tags: ["SQL", "Snowflake", "dbt", "Power BI", "DAX"],
-    cover: "steel",
+    cover: "blue",
     context:
       "A higher-education dataset (students, grades, attendance, funding) lived in 27 disconnected Excel sheets. The project: turn it into a trustworthy decisional system — from raw cells to executive dashboards.",
     approach: [
@@ -154,7 +158,7 @@ export const PROJECTS: Project[] = [
     summary:
       "Three physical servers running 15+ services: Nextcloud, Jellyfin, Matrix, Mailu, n8n, Pi-hole, Traefik, Dokploy, Uptime Kuma — all self-hosted, all monitored.",
     tags: ["Docker", "Traefik", "Dokploy", "WireGuard", "Linux"],
-    cover: "steel",
+    cover: "ink",
     context:
       "Running your own infrastructure teaches you what the cloud does — because now you do it yourself. Three servers (Homeserver, Monitor, Contabo VPS) form a WireGuard mesh with Traefik as the public edge.",
     approach: [
@@ -175,7 +179,7 @@ export const PROJECTS: Project[] = [
     summary:
       "Four published Obsidian plugins — one on the Community registry. TypeScript, Obsidian API, built for real daily use.",
     tags: ["TypeScript", "Obsidian API", "Open Source", "JavaScript"],
-    cover: "paper",
+    cover: "steel",
     context:
       "I use Obsidian as my primary knowledge tool. When the workflow broke, I didn't switch apps — I wrote plugins. Building for someone else's workflow (you can't control how they use it) taught me API design, documentation, and review discipline.",
     approach: [
@@ -198,7 +202,7 @@ export const PROJECTS: Project[] = [
     summary:
       "Containerized EL pipeline: Airbyte extracts CSVs, lands raw data in MinIO (S3-compatible), Airflow orchestrates downstream transforms. Zero custom ingestion code.",
     tags: ["Airbyte", "MinIO", "Airflow", "Docker"],
-    cover: "steel",
+    cover: "paper",
     context:
       "Hand-rolled Python extractors break when schemas change. This pipeline uses managed connectors (Airbyte) for EL and object storage (MinIO) as the raw zone — the pattern every data team converges on.",
     approach: [
@@ -218,7 +222,7 @@ export const PROJECTS: Project[] = [
     summary:
       "End-to-end distributed analysis of Human Microbiome Project FASTA sequences: k-mer extraction, Smith-Waterman alignment, LSH similarity, KMeans clustering — all on MapReduce + Spark.",
     tags: ["Hadoop", "MapReduce", "Spark", "MLlib", "Docker"],
-    cover: "blue",
+    cover: "violet",
     context:
       "5.7 GB of FASTA sequences from the Human Microbiome Project, processed by a 5-member team with sequential dependencies. Each member owned a pipeline stage; the orchestration script chained them.",
     approach: [
@@ -238,7 +242,7 @@ export const PROJECTS: Project[] = [
     summary:
       "PageRank implemented from scratch as an iterative MapReduce pipeline on YARN — not a library call, the actual algorithm, distributed.",
     tags: ["Hadoop", "MapReduce", "HDFS", "YARN", "Python"],
-    cover: "paper",
+    cover: "violet",
     context:
       "Two complementary labs: HDFS administration (upload, replication, permissions via CLI) and PageRank as a distributed iterative computation. The insight: PageRank is a sum-by-key operation — MapReduce falls out naturally.",
     approach: [
@@ -258,7 +262,7 @@ export const PROJECTS: Project[] = [
     summary:
       "Text-mining 3M+ healthcare research documents on a Dockerized Hadoop cluster via Hadoop Streaming with custom Python mapper/reducer scripts.",
     tags: ["Hadoop", "Streaming", "NLP", "Python", "Docker"],
-    cover: "steel",
+    cover: "violet",
     context:
       "Classic bibliometrics at scale: extract and rank the most significant terms across millions of documents. Ran on a 4-node Docker cluster (NameNode, DataNode, ResourceManager, NodeManager).",
     approach: [
@@ -278,7 +282,7 @@ export const PROJECTS: Project[] = [
     summary:
       "NLP pipeline on 50,000 IMDB reviews comparing Bag-of-Words vs TF-IDF. TF-IDF won on every metric — and the preprocessing mattered more than the vectorizer.",
     tags: ["Python", "scikit-learn", "NLTK", "TF-IDF", "NLP"],
-    cover: "paper",
+    cover: "coral",
     context:
       "Binôme project: build a text-classification pipeline and understand what actually drives performance. The dataset is balanced (25k positive / 25k negative), so accuracy is meaningful — unlike most real-world sentiment data.",
     approach: [
@@ -319,7 +323,7 @@ export const PROJECTS: Project[] = [
     summary:
       "Multi-agent hospital simulation: Patients, Doctors, Nurses, Admin, and Scheduler as autonomous agents coordinating through FIPA ACL messages — no central controller.",
     tags: ["Java", "JADE", "Multi-Agent Systems", "FIPA ACL"],
-    cover: "blue",
+    cover: "coral",
     context:
       "The mental shift: stop programming control flow, start programming behaviors. Nobody tells the nurse what to do — the nurse reacts to messages and its own state. Decentralized coordination through message passing.",
     approach: [
@@ -339,7 +343,7 @@ export const PROJECTS: Project[] = [
     summary:
       "Five-agent room-booking negotiation: BookingAgent, RoomAgent, SchedulerAgent, UserAgent, DBagent — propose/counter-propose instead of a CRUD endpoint.",
     tags: ["Java", "JADE", "Multi-Agent Systems"],
-    cover: "paper",
+    cover: "coral",
     context:
       "Booking is a negotiation: multiple users competing for limited rooms, preferences on both sides. The agent model handles that natively with propose/counter-propose semantics — a REST API would need a central scheduler doing the same thing.",
     approach: [
@@ -358,7 +362,7 @@ export const PROJECTS: Project[] = [
     summary:
       "Local-first AI assistant with long-term memory and tool use: Ollama for inference, SQLite for memory, shell execution and Obsidian read/write as tools. No API keys, no data leaves the laptop.",
     tags: ["Python", "Ollama", "Flask", "SQLite", "AI Agents"],
-    cover: "blue",
+    cover: "coral",
     context:
       "I wanted an assistant that sees my notes and can run commands — without any of that crossing a network. Local-first isn't about avoiding cloud costs; it's about keeping private data private.",
     approach: [
@@ -380,7 +384,7 @@ export const PROJECTS: Project[] = [
     summary:
       "Dozens of web utilities (QR, converters, hashers, encoders, diff tools) behind one self-hosted platform: shared auth, Docker per tool, Traefik routing, zero ads.",
     tags: ["React", "Node.js", "Docker", "Traefik", "Self-hosted"],
-    cover: "paper",
+    cover: "green",
     context:
       "The utilities you open ten times a week, minus the three popups you close to generate a QR code. The real engineering challenge wasn't the tools — it was deployment: separate repos, containers, and configs for each.",
     approach: [
@@ -399,7 +403,7 @@ export const PROJECTS: Project[] = [
     summary:
       "Invoicing with a reusable product catalog, MAD currency + TVA, PDF export — built for Moroccan small businesses in Next.js.",
     tags: ["Next.js", "TypeScript", "PostgreSQL", "Prisma"],
-    cover: "steel",
+    cover: "green",
     context:
       "Small businesses re-invoice the same products constantly. So the catalog comes first — invoices are selections from it, not blank forms. Deployed at invoice.naoufalelouahabi.com.",
     approach: [
@@ -437,7 +441,7 @@ export const PROJECTS: Project[] = [
     summary:
       "Inventory flow modeling the real warehouse lifecycle: PTM → OTM → RTS state machine with Excel import and sales reporting.",
     tags: ["React", "TypeScript", "State Machines", "Supply Chain"],
-    cover: "steel",
+    cover: "green",
     context:
       "Most inventory demos model 'products in a box.' Real warehouses move stock through states: Préparé → En Transit → Reçu. Each transition has guards (can't receive what wasn't shipped) and side effects (stock increases only on RTS).",
     approach: [
@@ -456,7 +460,7 @@ export const PROJECTS: Project[] = [
     summary:
       "Habit tracking with real analytics: completion heatmaps, per-habit trend lines, streak tracking, and time-of-day analysis — not just checkboxes.",
     tags: ["React", "Node.js", "PostgreSQL", "Chart.js"],
-    cover: "paper",
+    cover: "amber",
     context:
       "A checkbox says 'did you do it.' Analytics says 'is it working.' Those are different questions, and only one of them helps you change behavior.",
     approach: [
@@ -475,7 +479,7 @@ export const PROJECTS: Project[] = [
     summary:
       "Streaks + weight progress + Pomodoro timer in one PWA. Three habits, one app — the design lesson: three features done well beat ten done poorly.",
     tags: ["React", "PWA", "Node.js", "Productivity"],
-    cover: "blue",
+    cover: "paper",
     context:
       "I was tracking three habits in three different places. The design principle that guided the build: cut everything not used in week one.",
     approach: [
@@ -494,7 +498,7 @@ export const PROJECTS: Project[] = [
     summary:
       "200+ file format conversions: browser-side via WASM for privacy, server-side for heavy jobs. Batch mode included.",
     tags: ["React", "WASM", "Node.js", "FFmpeg"],
-    cover: "paper",
+    cover: "green",
     context:
       "Images, documents, audio, video, archives, e-books. The routing rule: if it fits in memory and isn't CPU-seconds of work, convert client-side (private, instant). Everything else goes to the server queue.",
     approach: [
@@ -513,7 +517,7 @@ export const PROJECTS: Project[] = [
     summary:
       "Django inventory with role-based access, supplier management, and a full AuditLog — every stock movement traceable to user, timestamp, and before/after values.",
     tags: ["Django", "PostgreSQL", "Python", "RBAC"],
-    cover: "steel",
+    cover: "paper",
     context:
       "The piece I'm proudest of: AuditLog. When stock doesn't match reality, you can trace exactly when it diverged. Role-based access: warehouse staff see stock, managers see reports, admins see everything.",
     approach: [
@@ -532,7 +536,7 @@ export const PROJECTS: Project[] = [
     summary:
       "Self-hosted downloader for 6 platforms (YouTube, TikTok, Instagram, X, Facebook, Reddit) with audio extraction. No ads, no captcha.",
     tags: ["Python", "yt-dlp", "FastAPI", "Docker"],
-    cover: "blue",
+    cover: "green",
     context:
       "Paste a URL, pick a format, download. Self-hosted so usage patterns aren't anyone's business. Built for content with rights to it: own uploads, Creative Commons, offline access to streamable material.",
     approach: [
@@ -551,7 +555,7 @@ export const PROJECTS: Project[] = [
     summary:
       "Offline-first budget tracking: local-first writes, incremental sync to Postgres/Supabase, field-level conflict merge. Works on the metro, syncs when connected.",
     tags: ["TypeScript", "TanStack", "SQLite", "Supabase"],
-    cover: "paper",
+    cover: "amber",
     context:
       "Budgeting happens on the metro, in cafés, everywhere there's no signal. An app that requires connectivity to log an expense is useless. Local-first was the requirement, not a feature.",
     approach: [
@@ -570,7 +574,7 @@ export const PROJECTS: Project[] = [
     summary:
       "First full-stack app: stock & supplier management with low-stock alerts and monthly analytics. The app I actually used to track my own purchases.",
     tags: ["React", "Node.js", "MongoDB"],
-    cover: "steel",
+    cover: "green",
     context:
       "Every senior engineer has a project like this. The value isn't the code quality — it's that you shipped something people (including you) used. Looking back at the code is humbling; the product still works.",
     approach: [
@@ -589,7 +593,7 @@ export const PROJECTS: Project[] = [
     summary:
       "Collaborative LMS for EMSI: courses centralized, quizzes auto-graded, forums per course, role-based access for professors and students.",
     tags: ["React", "FastAPI", "PostgreSQL", "EdTech"],
-    cover: "blue",
+    cover: "paper",
     context:
       "Course materials scattered across WhatsApp groups, email threads, and USB drives. Nothing searchable, nothing versioned. The biggest group project I've led — real users (classmates), a real deadline (semester start), real feature creep.",
     approach: [
@@ -608,7 +612,7 @@ export const PROJECTS: Project[] = [
     summary:
       "5-service microservices architecture: patient, doctor, appointments, notification, medical records. Triple-validation before appointment creation, graceful degradation.",
     tags: ["Java", "Spring Boot", "MariaDB", "React", "Microservices"],
-    cover: "steel",
+    cover: "green",
     context:
       "A distributed-systems course project taken seriously: independent services, inter-service communication, and the hard part — what happens when one service goes down.",
     approach: [
@@ -629,7 +633,7 @@ export const PROJECTS: Project[] = [
     summary:
       "4-role patient portal in native Android: Patient, Doctor, Nurse, Admin — each with a different home screen, permissions enforced at UI, API, and data layers.",
     tags: ["Java", "Android", "Retrofit", "Room", "Material Design"],
-    cover: "blue",
+    cover: "amber",
     context:
       "One codebase, four role-specific experiences. The architecture challenge: permissions enforced at every layer — a nurse can't see admin screens, and the API rejects it too.",
     approach: [
@@ -648,7 +652,7 @@ export const PROJECTS: Project[] = [
     summary:
       "Prayer times for 42+ Moroccan cities, fully offline, with a live per-second countdown that survives timezone boundaries and device sleep.",
     tags: ["Java", "Android", "SQLite", "Offline-first"],
-    cover: "paper",
+    cover: "amber",
     context:
       "Prayer times shouldn't need signal. Full dataset bundled locally. The engineering detail: naive setInterval drifts — remaining time is computed from timestamps, not tick counts.",
     approach: [
@@ -667,7 +671,7 @@ export const PROJECTS: Project[] = [
     summary:
       "Student assistant app: event timeline, GPA calculator (20-point Moroccan scale), assignment tracking, deadline notifications.",
     tags: ["Java", "Android", "SQLite", "Room"],
-    cover: "steel",
+    cover: "paper",
     context:
       "Built out of necessity — tracking assignments, grades, and deadlines across courses in my head wasn't working. The GPA calculator got more use than expected: weighted credits, retakes, and the Moroccan 20-point scale all needed handling.",
     approach: [
@@ -686,7 +690,7 @@ export const PROJECTS: Project[] = [
     summary:
       "Air-traffic simulation in JavaFX: 18+ threads, zero synchronized blocks — semaphores, priority queues, and atomic operations only.",
     tags: ["Java", "JavaFX", "Concurrency", "MongoDB"],
-    cover: "blue",
+    cover: "amber",
     context:
       "Planes take off, land, and hold patterns concurrently. Get the concurrency wrong and they collide (in the simulation). Zero synchronized blocks: every coordination goes through semaphores, queues, and atomics — easier to audit when there are no locks to forget.",
     approach: [
@@ -724,7 +728,7 @@ export const PROJECTS: Project[] = [
     summary:
       "Two SQLite explorers packaged for Linux + Windows: BLOB preview, CRUD grids, query history, schema visualization, charts.",
     tags: ["Electron", "SQLite", "JavaScript"],
-    cover: "steel",
+    cover: "amber",
     context:
       "Both built because I needed to look inside SQLite files and existing tools were bloated or paid. DbSentinel is the full-featured one; dbgui is the lighter quick-browser. BLOB preview was hardest — images, hex dumps, and truncated text for binary columns without crashing on a 50 MB blob.",
     approach: [
@@ -743,7 +747,7 @@ export const PROJECTS: Project[] = [
     summary:
       "Prayer-time app that lives in your system tray: always there, one click, one glance. Starts with the OS, stays out of the way.",
     tags: ["Electron", "Python", "System Tray"],
-    cover: "paper",
+    cover: "amber",
     context:
       "Prayer times are glanced at, not studied. That drove every decision: tray icon with countdown, popup on click, full window on demand. Fetches from yabiladi.com.",
     approach: [
@@ -764,7 +768,7 @@ export const PROJECTS: Project[] = [
     summary:
       "One Git command instead of 40. Wraps branch-start, sync, ship, and fixup workflows — not a Git wrapper, a workflow encoder.",
     tags: ["Bash", "Git", "CLI", "GitHub"],
-    cover: "blue",
+    cover: "paper",
     context:
       "How many commands to switch branch, pull, rebase, run checks, push, and open a PR? Seven. Forget one and you're debugging why CI failed on a stale branch. comit knows the sequence, not just the commands.",
     approach: [
@@ -783,7 +787,7 @@ export const PROJECTS: Project[] = [
     summary:
       "The site you're reading: TanStack Start + React 19 + Tailwind, SSR, deployed on my Contabo VPS via Dokploy with automatic TLS.",
     tags: ["React", "TanStack", "TypeScript", "Tailwind", "Docker"],
-    cover: "paper",
+    cover: "steel",
     context:
       "A portfolio should be fast, self-hosted, and honest about what's real. Every project here links to its GitHub repo (or the planned name). Built with TanStack Start for SSR, containerized with Docker, served from naoufalelouahabi.com.",
     approach: [
@@ -810,40 +814,47 @@ export const EXPLORING = [
   { label: "Streaming", text: "Kafka + Spark Streaming for real-time pipelines — the batch-to-streaming shift is the interesting part." },
 ];
 
-export const ARCHIVE: { category: ProjectCategory; blurb: string; slugs: string[] }[] = [
+export const ARCHIVE: { category: ProjectCategory; blurb: string; accent: CoverColor; slugs: string[] }[] = [
   {
     category: "Data Engineering",
     blurb: "Pipelines, warehouses, orchestration — turning raw data into trustworthy tables.",
+    accent: "blue",
     slugs: ["dataops-platform", "data-warehouse-etl", "airbyte-minio-airflow", "excel-extractor"],
   },
   {
     category: "Big Data",
     blurb: "Distributed computation on Hadoop and Spark — where single machines give up.",
+    accent: "violet",
     slugs: ["dna-mapreduce", "pagerank-hdfs", "bibliometrics-mapreduce"],
   },
   {
     category: "AI / ML",
     blurb: "Models, agents, and systems that learn — from probabilistic matching to multi-agent negotiation.",
+    accent: "coral",
     slugs: ["entity-resolution", "nids-cic-ids2017", "chatsphere", "sentiment-imdb", "sma-hospital", "sma-room-booking", "personal-assistant"],
   },
   {
     category: "Full-Stack",
     blurb: "Products people (actually) use — invoicing, budgets, inventory, conversion.",
+    accent: "green",
     slugs: ["toolmesh", "invoice-platform", "poolsplit", "pearl-gleam", "habitflow", "riseup", "format-fusion", "django-inventory", "social-downloader", "budgetly", "stockmaster", "emsi-share-learn", "medical-microservices"],
   },
   {
     category: "Mobile & Desktop",
     blurb: "Native Android, JavaFX simulations, Electron utilities — where the pixels live.",
+    accent: "amber",
     slugs: ["m-health", "salah-android", "academic-assistant", "air-traffic-manager", "pdfforge", "dbsentinel-dbgui", "salah-desktop"],
   },
   {
     category: "Dev Tooling",
     blurb: "CLI workflows, plugins, and scripts — making the tools fit the way I work.",
+    accent: "steel",
     slugs: ["obsidian-plugins", "comit", "pixel-perfect"],
   },
   {
     category: "Infrastructure",
     blurb: "Homelab, self-hosting, reverse proxies — running my own cloud.",
+    accent: "ink",
     slugs: ["homelab"],
   },
 ];

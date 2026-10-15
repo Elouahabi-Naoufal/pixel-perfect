@@ -2,7 +2,16 @@ import { Link } from "@tanstack/react-router";
 import type { Project } from "@/lib/site";
 
 const NODES: [number, number][] = [[30, 30], [60, 80], [40, 100], [150, 30], [170, 70], [130, 90]];
-const coverBg = { blue: "bg-blue", steel: "bg-steel", paper: "bg-paper dot-grid" };
+const coverBg: Record<string, string> = {
+  blue: "bg-blue",
+  steel: "bg-steel",
+  paper: "bg-paper dot-grid",
+  amber: "bg-amber",
+  coral: "bg-coral",
+  green: "bg-green",
+  violet: "bg-violet",
+  ink: "bg-ink text-paper",
+};
 
 export function ProjectCover({ p, big }: { p: Project; big?: boolean | undefined }) {
   return (
