@@ -26,7 +26,6 @@ const FLOATERS = [
 
 function Index() {
   const FEATURED = PROJECTS.filter((p) => p.featured);
-  const [a, b, ...rest] = FEATURED as [typeof FEATURED[number], typeof FEATURED[number], ...typeof FEATURED];
   return (
     <>
       <section className="relative overflow-hidden border-b-2 border-ink bg-blue">
@@ -48,9 +47,19 @@ function Index() {
             </div>
           </div>
           <div className="relative hidden min-h-[380px] md:block" aria-hidden>
-            <div className="absolute left-1/2 top-1/2 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-ink bg-steel" />
-            <div className="absolute left-[30%] top-[22%] h-24 w-24 rotate-12 border-2 border-ink bg-paper dot-grid" />
-            <div className="absolute bottom-[22%] right-[26%] h-0 w-0 border-x-[40px] border-b-[70px] border-x-transparent border-b-ink" />
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+              <div className="h-56 w-56 overflow-hidden rounded-full border-2 border-ink hard-shadow lg:h-64 lg:w-64">
+                <img
+                  src="/photos/naoufal.png"
+                  alt=""
+                  className="h-full w-full object-cover"
+                  loading="eager"
+                  onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                />
+              </div>
+            </div>
+            <div className="absolute left-[14%] top-[14%] h-20 w-20 rotate-12 border-2 border-ink bg-paper dot-grid" />
+            <div className="absolute bottom-[16%] right-[18%] h-0 w-0 border-x-[36px] border-b-[62px] border-x-transparent border-b-ink" />
             {FLOATERS.map((f, i) => (
               <span key={f.t} className={`bob absolute border-2 border-ink px-2.5 py-1 font-mono text-xs hard-shadow ${f.c} ${f.pos}`} style={{ ["--r" as string]: f.r, animationDelay: `${i * 0.8}s` }}>
                 {f.t}
@@ -65,11 +74,9 @@ function Index() {
           <h2 className="text-5xl font-bold md:text-7xl">Selected work</h2>
           <p className="hidden font-mono text-sm text-muted-foreground md:block">{PROJECTS.filter(p => p.featured).length} flagships</p>
         </div>
-        <div className="mt-12 grid gap-8 md:grid-cols-5">
-          <div className="md:col-span-3"><ProjectCard p={a} big /></div>
-          <div className="md:col-span-2 md:mt-16"><ProjectCard p={b} /></div>
-          {rest.map((p, i) => (
-            <div key={p.slug} className={i === 0 ? "md:col-span-2" : "md:col-span-3 md:-mt-10"}><ProjectCard p={p} /></div>
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {FEATURED.map((p) => (
+            <ProjectCard key={p.slug} p={p} />
           ))}
         </div>
       </section>
