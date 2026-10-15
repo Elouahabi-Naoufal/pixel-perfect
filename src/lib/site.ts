@@ -189,7 +189,6 @@ export const PROJECTS: Project[] = [
       { title: "Islam Plugin", body: "Salah (missed/active) and Quran tracking with a dashboard. Personal devotional tooling." },
     ],
     stack: ["TypeScript", "JavaScript", "Obsidian API", "esbuild"],
-    featured: true,
     ...gh("obsidian-wordlist-autocomplete"),
   },
 
@@ -800,6 +799,38 @@ export const PROJECTS: Project[] = [
   },
 ];
 
+export const OBSIDIAN_PLUGINS: {
+  name: string;
+  blurb: string;
+  status: "Published" | "Open source" | "In construction";
+  github: string;
+}[] = [
+  {
+    name: "Wordlist Autocomplete",
+    blurb: "Domain-aware vocabulary autocomplete from JSON wordlists — prefix, shorthand and contains matching, with contextual learning that re-ranks suggestions from your own choices. On the Obsidian Community Plugins registry.",
+    status: "Published",
+    github: "https://github.com/Elouahabi-Naoufal/obsidian-wordlist-autocomplete",
+  },
+  {
+    name: "Folder Focus",
+    blurb: "Hide and show folders in the file explorer to cut visual noise — searchable pickers, bulk hide/unhide, and a keep-specific mode for deep vaults with hundreds of folders.",
+    status: "Open source",
+    github: "https://github.com/Elouahabi-Naoufal/obsidian-folder-focus",
+  },
+  {
+    name: "Subject Manager",
+    blurb: "Turns the vault into an academic management system: subjects, notes, projects, assignments and exams — each linked to its university course. Built around the EMSI workload.",
+    status: "In construction",
+    github: "https://github.com/Elouahabi-Naoufal/obsidian-subject-manager",
+  },
+  {
+    name: "Islam Plugin",
+    blurb: "Salah (missed/active prayer) accounting with a dashboard and period-based bulk calculation — persistent, quantified, and reviewable without leaving the notes.",
+    status: "Open source",
+    github: "https://github.com/Elouahabi-Naoufal/obsidian-islam-plugin",
+  },
+];
+
 export const TOOLKIT: { group: string; items: string[] }[] = [
   { group: "Languages", items: ["Python", "SQL", "TypeScript", "Java", "C/C++", "JavaScript"] },
   { group: "Data engineering", items: ["Apache Airflow", "Snowflake", "dbt", "Kafka", "Spark", "DuckDB", "MinIO", "Hadoop"] },
@@ -849,7 +880,7 @@ export const ARCHIVE: { category: ProjectCategory; blurb: string; accent: CoverC
     category: "Dev Tooling",
     blurb: "CLI workflows, plugins, and scripts — making the tools fit the way I work.",
     accent: "steel",
-    slugs: ["obsidian-plugins", "comit", "pixel-perfect"],
+    slugs: ["comit", "pixel-perfect"],
   },
   {
     category: "Infrastructure",

@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ProjectCard } from "@/components/ProjectCard";
-import { ARCHIVE, EXPLORING, PROJECTS, SITE } from "@/lib/site";
+import { ARCHIVE, EXPLORING, OBSIDIAN_PLUGINS, PROJECTS, SITE } from "@/lib/site";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -92,10 +92,47 @@ function Index() {
           <h2 className="text-5xl font-bold md:text-7xl">Selected work</h2>
           <p className="hidden font-mono text-sm text-muted-foreground md:block">{PROJECTS.filter(p => p.featured).length} flagships</p>
         </div>
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURED.map((p) => (
             <ProjectCard key={p.slug} p={p} />
           ))}
+        </div>
+      </section>
+
+      <section id="obsidian" className="border-y-2 border-ink bg-steel">
+        <div className="mx-auto max-w-6xl px-5 py-20">
+          <div className="flex items-end justify-between gap-4">
+            <h2 className="text-5xl font-bold md:text-7xl">Obsidian plugins</h2>
+            <Link to="/work/$slug" params={{ slug: "obsidian-plugins" }} className="hidden font-mono text-sm underline underline-offset-4 md:block">
+              case study →
+            </Link>
+          </div>
+          <p className="mt-4 max-w-xl text-muted-foreground">
+            I use Obsidian as my primary knowledge tool — when the workflow broke, I wrote plugins instead of switching apps. Four of them, one on the Community registry.
+          </p>
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {OBSIDIAN_PLUGINS.map((pl) => (
+              <a
+                key={pl.name}
+                href={pl.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="lift group flex flex-col border-2 border-ink bg-paper hard-shadow"
+              >
+                <div className={`flex items-center justify-between border-b-2 border-ink px-4 py-2 ${pl.status === "Published" ? "bg-green" : pl.status === "In construction" ? "bg-amber" : "bg-paper"}`}>
+                  <span className="font-mono text-xs uppercase">{pl.status}</span>
+                  <span className="font-mono text-xs opacity-0 transition-opacity group-hover:opacity-100">↗ github</span>
+                </div>
+                <div className="flex flex-1 flex-col p-4">
+                  <h3 className="text-xl font-bold">{pl.name}</h3>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{pl.blurb}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+          <Link to="/work/$slug" params={{ slug: "obsidian-plugins" }} className="mt-8 inline-block font-mono text-sm underline underline-offset-4 md:hidden">
+            full case study →
+          </Link>
         </div>
       </section>
 
