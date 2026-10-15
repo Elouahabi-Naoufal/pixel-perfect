@@ -760,7 +760,7 @@ export const PROJECTS: Project[] = [
       { title: "Data-driven projects", body: "Every case study lives in one typed data file. Adding a project = adding an object." },
     ],
     stack: ["React 19", "TanStack Start", "TypeScript", "Tailwind CSS", "Docker", "Dokploy"],
-    ...gh("pixel-perfect"),
+    ...gh("portfolio"),
   },
 ];
 
