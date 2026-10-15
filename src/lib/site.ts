@@ -12,6 +12,7 @@ export type ProjectCategory =
   | "AI / ML"
   | "Big Data"
   | "Full-Stack"
+  | "Microservices"
   | "Mobile & Desktop"
   | "Dev Tooling"
   | "Obsidian"
@@ -172,31 +173,89 @@ export const PROJECTS: Project[] = [
     featured: true,
     ...gh("homelab-private"),
   },
+  // ── OBSIDIAN PLUGINS ──────────────────────────────────────────
   {
-    slug: "obsidian-plugins",
+    slug: "wordlist-autocomplete",
     num: "07",
-    title: "Obsidian Plugins ×4",
-    org: "Open Source",
+    title: "Wordlist Autocomplete",
+    org: "Open Source · Obsidian Plugin",
     summary:
-      "Four published Obsidian plugins — one on the Community registry. TypeScript, Obsidian API, built for real daily use.",
-    tags: ["TypeScript", "Obsidian API", "Open Source", "JavaScript"],
+      "Domain-aware vocabulary autocomplete from JSON wordlists — prefix, shorthand and contains matching, with contextual learning. Published on the Obsidian Community Plugins registry.",
+    tags: ["TypeScript", "Obsidian API", "esbuild", "Open Source"],
     cover: "steel",
     context:
-      "I use Obsidian as my primary knowledge tool. When the workflow broke, I didn't switch apps — I wrote plugins. Building for someone else's workflow (you can't control how they use it) taught me API design, documentation, and review discipline.",
+      "Writing consistently across a large vault meant looking up the same technical terms, names, and jargon over and over. Autocomplete plugins I tried were context-blind — they matched strings, not meaning. I needed suggestions that know the domain of each word and learn from what I actually pick.",
     approach: [
-      { title: "Wordlist Autocomplete", body: "Smart vocabulary autocomplete from JSON wordlists with metadata and contextual learning. Published on the Obsidian Community Plugins registry — passed review, documented API, real README." },
-      { title: "Folder Focus", body: "Hide/show folders in the file explorer. Commands: hide all, unhide all, keep specific, bulk operations. For deep vaults with hundreds of folders." },
-      { title: "Subject Manager", body: "Organize academic subjects, exams, and todos per course. Built for the EMSI workload." },
-      { title: "Islam Plugin", body: "Salah (missed/active) and Quran tracking with a dashboard. Personal devotional tooling." },
+      { title: "Enriched JSON dictionaries", body: "Each entry carries domain, category, and frequency metadata ({ word: { domain, category, frequency } }). Matching runs on prefix, shorthand ('orcl' → 'Oracle'), and contains — three triggers, one ranking pass." },
+      { title: "Contextual learning", body: "Usage patterns are recorded to personalized-suggestions.json and re-rank suggestions per context — the same word surface ranks differently in a database note vs a networking note." },
+      { title: "Dictionary management", body: "Per-file enable/disable, drag-and-drop priority reordering, bulk toggles. Plus a file-correction command that scans the active note and fixes misspelled words against the loaded dictionaries." },
+      { title: "Shipped through review", body: "Published on the Obsidian Community Plugins registry — passed review with documented API, real README, and release versions.json. TypeScript + esbuild, distributed as main.js + manifest.json + styles.css." },
     ],
     stack: ["TypeScript", "JavaScript", "Obsidian API", "esbuild"],
     ...gh("obsidian-wordlist-autocomplete"),
+  },
+  {
+    slug: "folder-focus",
+    num: "08",
+    title: "Folder Focus",
+    org: "Open Source · Obsidian Plugin",
+    summary:
+      "Hide and show folders in the Obsidian file explorer to cut visual noise — searchable pickers, bulk operations, and a keep-specific mode for deep vaults.",
+    tags: ["JavaScript", "Obsidian API", "Productivity"],
+    cover: "paper",
+    context:
+      "My vault has hundreds of folders across courses, projects, and archives. Working on one subject meant scrolling past everything else every single time. No native way to temporarily collapse the noise — so I wrote one.",
+    approach: [
+      { title: "Two modal pickers", body: "FolderPickerModal for single selection and BulkFolderPickerModal (Set-based multi-select with confirm) — both searchable with input filter, built on the Obsidian Modal API." },
+      { title: "Bulk commands", body: "Hide all, unhide all, bulk hide, bulk keep, and keep-specific mode (hide everything except the chosen folder). One command each — the point is speed." },
+      { title: "Persistent state", body: "Hidden folders persist in plugin data.json (default { hiddenFolders: [] }) via PluginSettingTab. Explorer re-render driven by file-manager leaf manipulation; desktop and mobile compatible (isDesktopOnly: false)." },
+    ],
+    stack: ["JavaScript", "Obsidian API"],
+    ...gh("obsidian-folder-focus"),
+  },
+  {
+    slug: "subject-manager",
+    num: "09",
+    title: "Subject Manager",
+    org: "Open Source · Obsidian Plugin · In construction",
+    summary:
+      "An academic management system inside Obsidian: subjects, notes, projects, assignments, and exams — each linked to its university course. Designed around the EMSI workload.",
+    tags: ["TypeScript", "Obsidian API", "Academic", "Spec → Build"],
+    cover: "amber",
+    context:
+      "Course materials, assignments, exam dates, and project milestones lived in separate places — notes in Obsidian, deadlines in my head. The fix wasn't another app; it was extending the tool I already live in, with every object linked to a subject.",
+    approach: [
+      { title: "Subject-first data model", body: "Subjects carry metadata (name, code, professor, semester, credits) with CRUD, archive, and per-type templates (course / project / research). Everything else attaches to a subject." },
+      { title: "Six modules in the spec", body: "Subject management, note organization (auto-tagging by subject code, folder scaffolds), project tracking (milestones, completion %, time estimated vs actual), assignment tracking (grades, late-penalty calculation), exam tracking (study plans with countdown), and per-subject todos." },
+      { title: "Currently in construction", body: "Full written specification drives the build — deliberately scoped so each module ships independently instead of as one big-bang plugin." },
+    ],
+    stack: ["TypeScript", "Obsidian API", "esbuild"],
+    ...gh("obsidian-subject-manager"),
+  },
+  {
+    slug: "islam-plugin",
+    num: "10",
+    title: "Islam Plugin",
+    org: "Open Source · Obsidian Plugin",
+    summary:
+      "Salah (prayer) obligation tracking inside Obsidian — missed-prayer counts split old/active per prayer, with a dashboard and period-based bulk calculation.",
+    tags: ["TypeScript", "Obsidian API", "Personal Tooling"],
+    cover: "green",
+    context:
+      "Keeping qada (make-up prayer) accounting in my head or in scattered notes kept drifting. The note system I already live in should hold it — persistent, quantified, reviewable.",
+    approach: [
+      { title: "Per-prayer accounting", body: "Counts split into old (historical) and active (recent) per prayer, stored as JSON through Obsidian's plugin data system (saveData / loadData) — no external database." },
+      { title: "Bulk period calculation", body: "'Calculate Old Salahs by Time Period' derives missed-prayer counts from elapsed days/months/years instead of manual tallying." },
+      { title: "Dashboard + commands", body: "Commands: Add Old Salah, Add Active Salah, Show Salah Dashboard — a tabular overview of all pending prayers with summary statistics. Settings split Salah and Quran tabs (Quran tracker reserved)." },
+    ],
+    stack: ["TypeScript", "JavaScript", "Obsidian API"],
+    ...gh("obsidian-islam-plugin"),
   },
 
   // ── DATA ENGINEERING & BIG DATA ───────────────────────────────
   {
     slug: "airbyte-minio-airflow",
-    num: "08",
+    num: "11",
     title: "EL Pipeline — Airbyte · MinIO · Airflow",
     org: "EMSI · Data Architectures",
     summary:
@@ -216,7 +275,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "dna-mapreduce",
-    num: "09",
+    num: "12",
     title: "Distributed DNA Analysis",
     org: "EMSI · Big Data Ecosystem",
     summary:
@@ -236,7 +295,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "pagerank-hdfs",
-    num: "10",
+    num: "13",
     title: "PageRank on HDFS",
     org: "EMSI · Data Architectures",
     summary:
@@ -256,7 +315,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "bibliometrics-mapreduce",
-    num: "11",
+    num: "14",
     title: "Healthcare Bibliometrics",
     org: "EMSI · Big Data",
     summary:
@@ -276,7 +335,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "sentiment-imdb",
-    num: "12",
+    num: "15",
     title: "Sentiment Analysis — IMDB",
     org: "EMSI · Data Mining (with Alae Moussa Laachiri)",
     summary:
@@ -296,7 +355,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "excel-extractor",
-    num: "13",
+    num: "16",
     title: "Excel/CSV Extractor Pipeline",
     org: "Personal · Data Engineering",
     summary:
@@ -317,7 +376,7 @@ export const PROJECTS: Project[] = [
   // ── AI / ML ───────────────────────────────────────────────────
   {
     slug: "sma-hospital",
-    num: "14",
+    num: "17",
     title: "Intelligent Hospital Simulator",
     org: "EMSI · Distributed AI (JADE)",
     summary:
@@ -337,7 +396,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "sma-room-booking",
-    num: "15",
+    num: "18",
     title: "Room Booking Multi-Agent System",
     org: "EMSI · Distributed AI (JADE)",
     summary:
@@ -356,7 +415,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "personal-assistant",
-    num: "16",
+    num: "19",
     title: "Local AI Assistant",
     org: "Personal · AI/ML",
     summary:
@@ -377,27 +436,8 @@ export const PROJECTS: Project[] = [
 
   // ── FULL-STACK ────────────────────────────────────────────────
   {
-    slug: "toolmesh",
-    num: "17",
-    title: "ToolMesh",
-    org: "Personal · Product",
-    summary:
-      "Dozens of web utilities (QR, converters, hashers, encoders, diff tools) behind one self-hosted platform: shared auth, Docker per tool, Traefik routing, zero ads.",
-    tags: ["React", "Node.js", "Docker", "Traefik", "Self-hosted"],
-    cover: "green",
-    context:
-      "The utilities you open ten times a week, minus the three popups you close to generate a QR code. The real engineering challenge wasn't the tools — it was deployment: separate repos, containers, and configs for each.",
-    approach: [
-      { title: "Platform, not pile", body: "Shared auth (one login), consistent UI system, admin panel with usage metrics. Each tool is a container; the platform is the product." },
-      { title: "Docker + Traefik", body: "One reverse proxy routes by host. Adding a tool = adding a compose service and a label." },
-      { title: "Self-hosted, ad-free", body: "Runs on my homelab. No data leaves my servers; no ads interrupt the workflow." },
-    ],
-    stack: ["React", "Node.js", "Docker", "Traefik", "PostgreSQL"],
-    ...gh("ToolMesh"),
-  },
-  {
     slug: "invoice-platform",
-    num: "18",
+    num: "20",
     title: "Invoice Platform",
     org: "Personal · Product",
     summary:
@@ -416,7 +456,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "poolsplit",
-    num: "19",
+    num: "21",
     title: "PoolSplit",
     org: "Personal · Product",
     summary:
@@ -434,65 +474,8 @@ export const PROJECTS: Project[] = [
     ...gh("poolsplit"),
   },
   {
-    slug: "pearl-gleam",
-    num: "20",
-    title: "Pearl Gleam Inventory",
-    org: "Personal · Product",
-    summary:
-      "Inventory flow modeling the real warehouse lifecycle: PTM → OTM → RTS state machine with Excel import and sales reporting.",
-    tags: ["React", "TypeScript", "State Machines", "Supply Chain"],
-    cover: "green",
-    context:
-      "Most inventory demos model 'products in a box.' Real warehouses move stock through states: Préparé → En Transit → Reçu. Each transition has guards (can't receive what wasn't shipped) and side effects (stock increases only on RTS).",
-    approach: [
-      { title: "State-machine lifecycle", body: "PTM → OTM → RTS with guarded transitions. Illegal transitions are impossible, not just discouraged." },
-      { title: "Excel bulk import", body: "Because that's how the data arrives. Parser handles messy exports." },
-      { title: "Sales reporting", body: "Period rollups, stock movement audit trail." },
-    ],
-    stack: ["React", "TypeScript", "Node.js"],
-    ...gh("pearl-gleam-inventory"),
-  },
-  {
-    slug: "habitflow",
-    num: "21",
-    title: "HabitFlow",
-    org: "Personal · Product",
-    summary:
-      "Habit tracking with real analytics: completion heatmaps, per-habit trend lines, streak tracking, and time-of-day analysis — not just checkboxes.",
-    tags: ["React", "Node.js", "PostgreSQL", "Chart.js"],
-    cover: "amber",
-    context:
-      "A checkbox says 'did you do it.' Analytics says 'is it working.' Those are different questions, and only one of them helps you change behavior.",
-    approach: [
-      { title: "Completion heatmap", body: "GitHub-contributions-style visual for habit consistency over time." },
-      { title: "Per-habit trends", body: "Is this habit getting easier or harder? Trend lines per habit, not just aggregate streaks." },
-      { title: "Time-of-day analysis", body: "When do you actually do this? Patterns surface that streak counters hide." },
-    ],
-    stack: ["React", "Node.js", "PostgreSQL", "Chart.js"],
-    ...gh("habitflow-analytics", true),
-  },
-  {
-    slug: "riseup",
-    num: "22",
-    title: "RiseUp Daily Bloom",
-    org: "Personal · Product",
-    summary:
-      "Streaks + weight progress + Pomodoro timer in one PWA. Three habits, one app — the design lesson: three features done well beat ten done poorly.",
-    tags: ["React", "PWA", "Node.js", "Productivity"],
-    cover: "paper",
-    context:
-      "I was tracking three habits in three different places. The design principle that guided the build: cut everything not used in week one.",
-    approach: [
-      { title: "Habit streaks", body: "Visual calendar, current + best streak tracking." },
-      { title: "Weight trend ring", body: "Daily weight is noise; weekly moving average is signal. The app shows both." },
-      { title: "Pomodoro + bloom score", body: "Focus timer feeds a daily 'bloom' score combining all three habits." },
-    ],
-    stack: ["React", "Node.js", "SQLite", "PWA"],
-    ...gh("riseup-daily-bloom", true),
-  },
-  {
     slug: "format-fusion",
-    num: "23",
+    num: "22",
     title: "FormatFusion",
     org: "Personal · Product",
     summary:
@@ -511,7 +494,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "django-inventory",
-    num: "24",
+    num: "23",
     title: "Inventory Management System",
     org: "Personal · Full-Stack",
     summary:
@@ -530,7 +513,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "social-downloader",
-    num: "25",
+    num: "24",
     title: "Social Media Downloader",
     org: "Personal · Product",
     summary:
@@ -548,27 +531,8 @@ export const PROJECTS: Project[] = [
     ...gh("Social-Media-Downloader"),
   },
   {
-    slug: "budgetly",
-    num: "26",
-    title: "Budgetly",
-    org: "Personal · Product",
-    summary:
-      "Offline-first budget tracking: local-first writes, incremental sync to Postgres/Supabase, field-level conflict merge. Works on the metro, syncs when connected.",
-    tags: ["TypeScript", "TanStack", "SQLite", "Supabase"],
-    cover: "amber",
-    context:
-      "Budgeting happens on the metro, in cafés, everywhere there's no signal. An app that requires connectivity to log an expense is useless. Local-first was the requirement, not a feature.",
-    approach: [
-      { title: "Local-first writes", body: "TanStack Query + IndexedDB/SQLite. Every write lands locally first; the UI never waits on the network." },
-      { title: "Incremental sync", body: "Only changed records go up. Full-state sync is trivial but wasteful; delta sync is what works." },
-      { title: "Conflict merge", body: "Field-level merge on sync. Two devices editing between syncs get combined, not overwritten." },
-    ],
-    stack: ["TypeScript", "TanStack Query", "React", "SQLite", "Supabase"],
-    ...gh("Budgetly"),
-  },
-  {
     slug: "stockmaster",
-    num: "27",
+    num: "25",
     title: "StockMaster",
     org: "EMSI · 3rd Year PFM",
     summary:
@@ -587,7 +551,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "emsi-share-learn",
-    num: "28",
+    num: "26",
     title: "EMSI Share-Learn",
     org: "EMSI · PFA Capstone",
     summary:
@@ -606,7 +570,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "medical-microservices",
-    num: "29",
+    num: "27",
     title: "Medical Appointments Microservices",
     org: "EMSI · Distributed Systems",
     summary:
@@ -627,7 +591,7 @@ export const PROJECTS: Project[] = [
   // ── MOBILE & DESKTOP ──────────────────────────────────────────
   {
     slug: "m-health",
-    num: "30",
+    num: "28",
     title: "m-Health Android",
     org: "EMSI · Mobile Development",
     summary:
@@ -646,7 +610,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "salah-android",
-    num: "31",
+    num: "29",
     title: "Salah Android",
     org: "Personal · Mobile",
     summary:
@@ -665,7 +629,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "academic-assistant",
-    num: "32",
+    num: "30",
     title: "Academic Assistant",
     org: "EMSI · Mobile",
     summary:
@@ -684,7 +648,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "air-traffic-manager",
-    num: "33",
+    num: "31",
     title: "Air Traffic Manager",
     org: "EMSI · Concurrency",
     summary:
@@ -703,7 +667,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "pdfforge",
-    num: "34",
+    num: "32",
     title: "PDFForge",
     org: "Personal · Desktop",
     summary:
@@ -722,7 +686,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "dbsentinel-dbgui",
-    num: "35",
+    num: "33",
     title: "DbSentinel + dbgui",
     org: "Personal · Desktop",
     summary:
@@ -741,7 +705,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "salah-desktop",
-    num: "36",
+    num: "34",
     title: "Salah Time Desktop",
     org: "Personal · Desktop",
     summary:
@@ -762,7 +726,7 @@ export const PROJECTS: Project[] = [
   // ── DEV TOOLING ───────────────────────────────────────────────
   {
     slug: "comit",
-    num: "37",
+    num: "35",
     title: "comit",
     org: "Personal · CLI",
     summary:
@@ -781,7 +745,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "pixel-perfect",
-    num: "38",
+    num: "36",
     title: "This Portfolio",
     org: "Personal · Web",
     summary:
@@ -797,38 +761,6 @@ export const PROJECTS: Project[] = [
     ],
     stack: ["React 19", "TanStack Start", "TypeScript", "Tailwind CSS", "Docker", "Dokploy"],
     ...gh("pixel-perfect"),
-  },
-];
-
-export const OBSIDIAN_PLUGINS: {
-  name: string;
-  blurb: string;
-  status: "Published" | "Open source" | "In construction";
-  github: string;
-}[] = [
-  {
-    name: "Wordlist Autocomplete",
-    blurb: "Domain-aware vocabulary autocomplete from JSON wordlists — prefix, shorthand and contains matching, with contextual learning that re-ranks suggestions from your own choices. On the Obsidian Community Plugins registry.",
-    status: "Published",
-    github: "https://github.com/Elouahabi-Naoufal/obsidian-wordlist-autocomplete",
-  },
-  {
-    name: "Folder Focus",
-    blurb: "Hide and show folders in the file explorer to cut visual noise — searchable pickers, bulk hide/unhide, and a keep-specific mode for deep vaults with hundreds of folders.",
-    status: "Open source",
-    github: "https://github.com/Elouahabi-Naoufal/obsidian-folder-focus",
-  },
-  {
-    name: "Subject Manager",
-    blurb: "Turns the vault into an academic management system: subjects, notes, projects, assignments and exams — each linked to its university course. Built around the EMSI workload.",
-    status: "In construction",
-    github: "https://github.com/Elouahabi-Naoufal/obsidian-subject-manager",
-  },
-  {
-    name: "Islam Plugin",
-    blurb: "Salah (missed/active prayer) accounting with a dashboard and period-based bulk calculation — persistent, quantified, and reviewable without leaving the notes.",
-    status: "Open source",
-    github: "https://github.com/Elouahabi-Naoufal/obsidian-islam-plugin",
   },
 ];
 
@@ -867,9 +799,15 @@ export const ARCHIVE: { category: ProjectCategory; blurb: string; accent: CoverC
   },
   {
     category: "Full-Stack",
-    blurb: "Products people (actually) use — invoicing, budgets, inventory, conversion.",
+    blurb: "Products people (actually) use — invoicing, stock, learning, conversion.",
     accent: "green",
-    slugs: ["toolmesh", "invoice-platform", "poolsplit", "pearl-gleam", "habitflow", "riseup", "format-fusion", "django-inventory", "social-downloader", "budgetly", "stockmaster", "emsi-share-learn", "medical-microservices"],
+    slugs: ["invoice-platform", "poolsplit", "format-fusion", "django-inventory", "social-downloader", "stockmaster", "emsi-share-learn"],
+  },
+  {
+    category: "Microservices",
+    blurb: "Distributed backends — service-per-resource architectures with API gateways and inter-service messaging.",
+    accent: "coral",
+    slugs: ["medical-microservices"],
   },
   {
     category: "Mobile & Desktop",
@@ -887,7 +825,7 @@ export const ARCHIVE: { category: ProjectCategory; blurb: string; accent: CoverC
     category: "Obsidian",
     blurb: "Plugins I wrote for my own knowledge workflow — one published on the Community registry.",
     accent: "steel",
-    slugs: ["obsidian-plugins"],
+    slugs: ["wordlist-autocomplete", "folder-focus", "subject-manager", "islam-plugin"],
   },
   {
     category: "Infrastructure",
