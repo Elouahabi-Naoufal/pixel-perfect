@@ -14,6 +14,7 @@ export type ProjectCategory =
   | "Full-Stack"
   | "Mobile & Desktop"
   | "Dev Tooling"
+  | "Obsidian"
   | "Infrastructure";
 
 export type CoverColor = "blue" | "steel" | "paper" | "amber" | "coral" | "green" | "violet" | "ink";
@@ -881,6 +882,12 @@ export const ARCHIVE: { category: ProjectCategory; blurb: string; accent: CoverC
     blurb: "CLI workflows, plugins, and scripts — making the tools fit the way I work.",
     accent: "steel",
     slugs: ["comit", "pixel-perfect"],
+  },
+  {
+    category: "Obsidian",
+    blurb: "Plugins I wrote for my own knowledge workflow — one published on the Community registry.",
+    accent: "steel",
+    slugs: ["obsidian-plugins"],
   },
   {
     category: "Infrastructure",
