@@ -1,7 +1,7 @@
 # Build stage
 FROM node:22-alpine AS build
 WORKDIR /app
-COPY package.json bun.lock ./
+COPY package.json package-lock.json* ./
 RUN npm install --ignore-scripts
 COPY . .
 ENV NITRO_PRESET=node-server
