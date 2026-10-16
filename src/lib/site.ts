@@ -319,16 +319,16 @@ export const PROJECTS: Project[] = [
     title: "Healthcare Bibliometrics",
     org: "EMSI · Big Data",
     summary:
-      "Text-mining 3M+ healthcare research documents on a Dockerized Hadoop cluster via Hadoop Streaming with custom Python mapper/reducer scripts.",
+      "Distributed bibliometric analysis of an AI-in-healthcare publication corpus on a Dockerized Hadoop cluster via Hadoop Streaming — validated against a Python/pandas branch.",
     tags: ["Hadoop", "Streaming", "NLP", "Python", "Docker"],
     cover: "violet",
     context:
-      "Classic bibliometrics at scale: extract and rank the most significant terms across millions of documents. Ran on a 4-node Docker cluster (NameNode, DataNode, ResourceManager, NodeManager).",
+      "Classic bibliometrics at scale: extract and rank the most significant terms, years, countries, and authors across a research corpus. Built as a binôme — a simulated Python/pandas MapReduce for validation, and real Hadoop Streaming for the actual cluster run.",
     approach: [
-      { title: "Dockerized Hadoop cluster", body: "Four-node cluster in Docker: NameNode + DataNode for storage, ResourceManager + NodeManager for compute. Real distributed-systems debugging." },
-      { title: "Hadoop Streaming", body: "Python mapper.py tokenizes documents and emits (term, 1); reducer.py aggregates and ranks. No JVM code — just Unix-filter philosophy at scale." },
-      { title: "Real document messiness", body: "HTML remnants, encoding issues, multilingual abstracts. The reducer was easy; making the mapper robust against real text was not." },
-      { title: "Ranked term extraction", body: "Output: global term-frequency table with significance ranking across the full corpus." },
+      { title: "Dockerized Hadoop cluster", body: "Four-service cluster in Docker: NameNode + DataNode for storage, ResourceManager + NodeManager for compute. Real distributed-systems debugging." },
+      { title: "Hadoop Streaming", body: "mapper_keywords.py emits (keyword, 1); reducer_sum.py aggregates and ranks. No JVM code — just Unix-filter philosophy at scale." },
+      { title: "Dual-implementation validation", body: "Python/pandas branch produced the same rankings as Hadoop — trust the cluster output because something independent agrees with it." },
+      { title: "Ranked extraction", body: "Keyword frequency, publications per year, top countries, most prolific authors — five jobs in total." },
     ],
     stack: ["Hadoop Streaming", "HDFS", "Python", "Docker"],
     ...gh("healthcare-bibliometrics-mapreduce", true),
@@ -359,17 +359,17 @@ export const PROJECTS: Project[] = [
     title: "Excel/CSV Extractor Pipeline",
     org: "Personal · Data Engineering",
     summary:
-      "Apache Airflow pipeline automating extraction from Excel and CSV files — scheduled, monitored, reliable tabular ingestion.",
-    tags: ["Airflow", "Python", "Excel", "ETL"],
+      "Self-serve data API: upload Excel/CSV, get a browsable, queryable REST endpoint backed by PostgreSQL. Airflow orchestration scaffolded for the next step.",
+    tags: ["FastAPI", "Python", "PostgreSQL", "pandas"],
     cover: "steel",
     context:
-      "I kept writing the same 'parse spreadsheet → clean → load' code. This pipeline extracts that pattern into a scheduled, observable Airflow DAG.",
+      "I kept writing the same 'parse spreadsheet → clean → load' code. This turns any spreadsheet into a queryable API in two calls — no framework boilerplate per file.",
     approach: [
-      { title: "Automated extraction", body: "DAG parses Excel/CSV uploads, handles mixed types and locale-dependent date formats." },
-      { title: "Scheduling & monitoring", body: "Airflow handles retries, alerting, and run history. Failed runs are visible, not silent." },
-      { title: "Repeatable ingestion", body: "Idempotent loads — re-running a DAG can't duplicate rows." },
+      { title: "Upload → process → query", body: "POST /upload (xlsx/xls/csv), POST /process-file → pandas parses mixed types and locale dates → to_sql into PostgreSQL as data_<name>. Idempotent replace." },
+      { title: "8 REST endpoints", body: "Tables, columns, schema, paginated data, NaN-safe stats (nulls/mean/min/max), parameterized search (exact/regex/case-sensitive). Plus an interactive CLI front-end." },
+      { title: "Airflow next", body: "Scheduler + webserver scaffolded in Docker Compose — the DAG layer for scheduled re-ingestion is the planned follow-up, not claimed as built." },
     ],
-    stack: ["Apache Airflow", "Python", "pandas", "Excel"],
+    stack: ["Python", "FastAPI", "pandas", "SQLAlchemy", "PostgreSQL", "Docker Compose"],
     ...gh("Excel_csv_data_extractor_Airflow"),
   },
 
@@ -479,17 +479,17 @@ export const PROJECTS: Project[] = [
     title: "FormatFusion",
     org: "Personal · Product",
     summary:
-      "200+ file format conversions: browser-side via WASM for privacy, server-side for heavy jobs. Batch mode included.",
-    tags: ["React", "WASM", "Node.js", "FFmpeg"],
+      "200+ file format conversions with batch mode, an admin dashboard, and a built-in blog. Client-side for supported formats; Flask queue for the rest.",
+    tags: ["React", "TypeScript", "Flask", "SQLite"],
     cover: "green",
     context:
-      "Images, documents, audio, video, archives, e-books. The routing rule: if it fits in memory and isn't CPU-seconds of work, convert client-side (private, instant). Everything else goes to the server queue.",
+      "Images, documents, audio, video, archives, e-books. The routing rule: if it can convert in the browser, do it there (private, instant). Everything else goes to the server queue.",
     approach: [
-      { title: "WASM client-side conversion", body: "No upload for supported formats. Privacy by architecture — the file never leaves the browser." },
-      { title: "Server-side heavy jobs", body: "Video, large files → backend queue with FFmpeg and Sharp." },
-      { title: "Batch processing", body: "Drop 50 files, get 50 converted files back." },
+      { title: "Client-side conversion first", body: "No upload for supported formats. Privacy by architecture — the file never leaves the browser." },
+      { title: "Server-side queue", body: "Everything else → Flask REST API with Pillow-backed processing, SQLite persistence, JWT auth." },
+      { title: "Batch processing", body: "Drop 50 files, get 50 converted files back — plus admin dashboard and markdown blog for the product layer." },
     ],
-    stack: ["React", "WASM", "Node.js", "FFmpeg", "Sharp"],
+    stack: ["React", "TypeScript", "Vite", "Tailwind CSS", "Flask", "SQLite", "Pillow", "JWT"],
     ...gh("format-fusion-web-app"),
   },
   {
@@ -518,16 +518,16 @@ export const PROJECTS: Project[] = [
     org: "Personal · Product",
     summary:
       "Self-hosted downloader for 6 platforms (YouTube, TikTok, Instagram, X, Facebook, Reddit) with audio extraction. No ads, no captcha.",
-    tags: ["Python", "yt-dlp", "FastAPI", "Docker"],
+    tags: ["Python", "yt-dlp", "Flask", "Docker"],
     cover: "green",
     context:
       "Paste a URL, pick a format, download. Self-hosted so usage patterns aren't anyone's business. Built for content with rights to it: own uploads, Creative Commons, offline access to streamable material.",
     approach: [
       { title: "yt-dlp backbone", body: "Six platforms via one library. Quality selection per platform." },
       { title: "Audio extraction", body: "MP3/FLAC extraction via FFmpeg. Toggle in the UI." },
-      { title: "Batch queue", body: "Queue multiple URLs; process sequentially with progress." },
+      { title: "Admin layer", body: "Download history, auto-cleanup, storage health, and a markdown blog — Flask + SQLAlchemy over SQLite." },
     ],
-    stack: ["Python", "yt-dlp", "FastAPI", "Docker"],
+    stack: ["Python", "Flask", "yt-dlp", "FFmpeg", "SQLAlchemy", "SQLite", "Docker"],
     ...gh("Social-Media-Downloader"),
   },
   {
@@ -537,16 +537,16 @@ export const PROJECTS: Project[] = [
     org: "EMSI · 3rd Year PFM",
     summary:
       "First full-stack app: stock & supplier management with low-stock alerts and monthly analytics. The app I actually used to track my own purchases.",
-    tags: ["React", "Node.js", "MongoDB"],
+    tags: ["Django", "PostgreSQL", "Python"],
     cover: "green",
     context:
       "Every senior engineer has a project like this. The value isn't the code quality — it's that you shipped something people (including you) used. Looking back at the code is humbling; the product still works.",
     approach: [
-      { title: "Dashboard with alerts", body: "Low-stock notifications before you run out. Monthly analytics charts." },
-      { title: "Supplier management", body: "Directory with ordering history." },
+      { title: "Role dashboards", body: "Admin / staff / supplier each get their own view. Low-stock notifications before you run out; monthly analytics charts." },
+      { title: "CSV import-export", body: "Bulk inventory load with column mapping — the feature that made it actually usable on real data." },
       { title: "What I'd do differently", body: "Proper API layer separation, real auth, tests. What I'd keep: the analytics view." },
     ],
-    stack: ["React", "Node.js", "MongoDB"],
+    stack: ["Django", "Python", "PostgreSQL", "HTML/CSS", "Docker"],
     ...gh("stockmaster-python", true),
   },
   {
@@ -614,17 +614,17 @@ export const PROJECTS: Project[] = [
     title: "Salah Android",
     org: "Personal · Mobile",
     summary:
-      "Prayer times for 42+ Moroccan cities, fully offline, with a live per-second countdown that survives timezone boundaries and device sleep.",
-    tags: ["Java", "Android", "SQLite", "Offline-first"],
+      "Prayer times for 42+ Moroccan cities with a live per-second countdown — daily scrape from yabiladi.com with a cached offline fallback.",
+    tags: ["Java", "Android", "Jsoup", "Offline fallback"],
     cover: "amber",
     context:
-      "Prayer times shouldn't need signal. Full dataset bundled locally. The engineering detail: naive setInterval drifts — remaining time is computed from timestamps, not tick counts.",
+      "Ported from my Python desktop app so the times follow me on my phone. The engineering detail: naive setInterval drifts — remaining time is computed from timestamps, not tick counts, so it survives sleep and timezone changes.",
     approach: [
-      { title: "Offline by architecture", body: "42+ cities' prayer schedules bundled in the app. Zero network calls." },
+      { title: "Daily scrape + cache", body: "Jsoup parses yabiladi.com's monthly prayer table; results cached locally so the app keeps working with no signal." },
       { title: "Accurate countdown", body: "Computed from timestamps, not interval ticks. Survives sleep, timezone changes, and DST." },
-      { title: "Notifications", body: "Per-prayer reminders via AlarmManager." },
+      { title: "Notifications", body: "Per-prayer reminders via AlarmManager; city search across 42+ cities with AR/FR/EN names." },
     ],
-    stack: ["Java", "Android SDK", "SQLite", "AlarmManager"],
+    stack: ["Java", "Android SDK", "Jsoup", "Retrofit", "Gson", "Material Design"],
     ...gh("Salah_Android_App"),
   },
   {
@@ -634,16 +634,16 @@ export const PROJECTS: Project[] = [
     org: "EMSI · Mobile",
     summary:
       "Student assistant app: event timeline, GPA calculator (20-point Moroccan scale), assignment tracking, deadline notifications.",
-    tags: ["Java", "Android", "SQLite", "Room"],
+    tags: ["Java", "Android", "Material 3", "JSON"],
     cover: "paper",
     context:
       "Built out of necessity — tracking assignments, grades, and deadlines across courses in my head wasn't working. The GPA calculator got more use than expected: weighted credits, retakes, and the Moroccan 20-point scale all needed handling.",
     approach: [
-      { title: "Timeline view", body: "Upcoming events (exams, deadlines, classes) in chronological order." },
+      { title: "Timeline view", body: "Unified chronology of exams, deadlines, classes, and makeup sessions with urgency indicators and a live next-event countdown." },
       { title: "GPA calculator", body: "Weighted credits, retakes, 20-point scale. Per-semester history." },
-      { title: "Assignment tracking", body: "Status, priority, notifications before deadlines." },
+      { title: "Assignment tracking", body: "Status, priority, reminders before deadlines (1 day / 3 days / 1 week). JSON local storage — no backend." },
     ],
-    stack: ["Java", "Android SDK", "SQLite", "Room"],
+    stack: ["Java", "Android SDK", "Material Design 3", "JSON storage"],
     ...gh("Academic_Management_Assistant"),
   },
   {
@@ -691,17 +691,17 @@ export const PROJECTS: Project[] = [
     org: "Personal · Desktop",
     summary:
       "Two SQLite explorers packaged for Linux + Windows: BLOB preview, CRUD grids, query history, schema visualization, charts.",
-    tags: ["Electron", "SQLite", "JavaScript"],
+    tags: ["Python", "PyQt5", "PyQt6", "SQLCipher"],
     cover: "amber",
     context:
-      "Both built because I needed to look inside SQLite files and existing tools were bloated or paid. DbSentinel is the full-featured one; dbgui is the lighter quick-browser. BLOB preview was hardest — images, hex dumps, and truncated text for binary columns without crashing on a 50 MB blob.",
+      "Both built because I needed to look inside SQLite files and existing tools were bloated or paid. DbSentinel is the full-featured one (three generations, ending in a PyQt5 rewrite); dbgui is the lighter PyQt6 quick-browser. BLOB preview was hardest — images, hex dumps, and truncated text for binary columns without crashing on a 50 MB blob.",
     approach: [
       { title: "BLOB preview", body: "Images, hex, truncated text for binary columns. Memory-safe on large blobs." },
-      { title: "CRUD + query history", body: "Editable grids, saved queries, schema visualization." },
-      { title: "Cross-platform packaging", body: "Electron + native installers for Linux and Windows." },
+      { title: "CRUD + query history", body: "Editable grids, saved queries, schema visualization, SQLCipher password prompts." },
+      { title: "Cross-platform packaging", body: "PyQt5/PyQt6 with AppImage, PyInstaller, and a Windows exe — no Electron needed." },
     ],
-    stack: ["Electron", "SQLite", "JavaScript"],
-    ...gh("DbSentinel"),
+    stack: ["Python", "PyQt5", "PyQt6", "SQLite", "SQLCipher", "pandas", "matplotlib"],
+    ...gh("dbgui"),
   },
   {
     slug: "salah-desktop",
@@ -710,16 +710,16 @@ export const PROJECTS: Project[] = [
     org: "Personal · Desktop",
     summary:
       "Prayer-time app that lives in your system tray: always there, one click, one glance. Starts with the OS, stays out of the way.",
-    tags: ["Electron", "Python", "System Tray"],
+    tags: ["Python", "PyQt5", "System Tray"],
     cover: "amber",
     context:
       "Prayer times are glanced at, not studied. That drove every decision: tray icon with countdown, popup on click, full window on demand. Fetches from yabiladi.com.",
     approach: [
-      { title: "System tray UX", body: "Icon always visible; popup shows next prayer + countdown. No window to manage." },
-      { title: "yabiladi.com source", body: "Moroccan prayer times via scraping/API from yabiladi." },
-      { title: "Auto-start", body: "Launches with the OS; lives quietly until needed." },
+      { title: "System tray UX", body: "Icon always visible; popup shows next prayer + countdown. Single-instance lock, starts with the OS." },
+      { title: "yabiladi.com scraping", body: "BeautifulSoup parses the monthly prayer table; SQLite cache at ~/.salah_times with offline fallback and 30-day refresh." },
+      { title: "Modular rewrite", body: "v2.0: 8-module PyQt5 layout (window/database/worker/views/dialogs/tray/constants) — the design reference for the Android port." },
     ],
-    stack: ["Electron", "Python"],
+    stack: ["Python", "PyQt5", "BeautifulSoup", "SQLite", "PyInstaller"],
     ...gh("Salah-Morocco"),
   },
 
