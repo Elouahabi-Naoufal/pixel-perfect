@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ProjectCover } from "@/components/ProjectCard";
+import { PROJECT_DETAILS } from "@/lib/details";
 import { PROJECTS } from "@/lib/site";
 
 export const Route = createFileRoute("/work/$slug")({
@@ -34,6 +35,7 @@ export const Route = createFileRoute("/work/$slug")({
 
 function CaseStudy() {
   const { project: p } = Route.useLoaderData();
+  const d = PROJECT_DETAILS[p.slug];
   const idx = PROJECTS.findIndex((x) => x.slug === p.slug);
   const next = PROJECTS[(idx + 1) % PROJECTS.length] ?? p;
   return (
@@ -44,13 +46,12 @@ function CaseStudy() {
         <div>
           <p className="font-mono text-sm text-muted-foreground">{p.org}</p>
           <h1 className="mt-2 text-6xl font-bold md:text-7xl">{p.title}</h1>
-          <p className="mt-6 text-lg leading-relaxed">{p.context}</p>
         </div>
         <aside className="h-fit border-2 border-ink bg-paper p-5">
           <p className="font-mono text-xs uppercase">Tags</p>
           <div className="mt-3 flex flex-wrap gap-1.5">{p.tags.map((t) => <span key={t} className="tag bg-blue">{t}</span>)}</div>
           {p.stack.length > 0 && (<>
-            <p className="mt-5 font-mono text-xs uppercase">Stack</p>
+            <p className="mt-5 font-mono text-xs uppercase">Technologies</p>
             <ul className="mt-2 space-y-1 font-display font-semibold">{p.stack.map((s) => <li key={s}>{s}</li>)}</ul>
           </>)}
           {p.github && (
@@ -71,6 +72,55 @@ function CaseStudy() {
           )}
         </aside>
       </div>
+
+      <section className="mt-14 border-t-2 border-ink pt-10">
+        <h2 className="text-4xl font-bold md:text-5xl">Summary</h2>
+        <p className="mt-6 text-xl font-semibold leading-relaxed">{p.summary}</p>
+        <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{p.context}</p>
+      </section>
+
+      {d && (
+        <>
+          <section className="mt-14 border-t-2 border-ink pt-10">
+            <h2 className="text-4xl font-bold md:text-5xl">Full description</h2>
+            {d.description.split("\n\n").map((para) => (
+              <p key={para.slice(0, 40)} className="mt-5 text-lg leading-relaxed">{para}</p>
+            ))}
+          </section>
+
+          <section className="mt-14 border-t-2 border-ink pt-10">
+            <h2 className="text-4xl font-bold md:text-5xl">Architecture & structure</h2>
+            <div className="mt-6 border-2 border-ink bg-steel p-6 hard-shadow">
+              {d.architecture.split("\n\n").map((para) => (
+                <p key={para.slice(0, 40)} className="mt-3 text-base leading-relaxed first:mt-0">{para}</p>
+              ))}
+            </div>
+          </section>
+
+          <section className="mt-14 border-t-2 border-ink pt-10">
+            <h2 className="text-4xl font-bold md:text-5xl">Key features</h2>
+            <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+              {d.features.map((f) => (
+                <li key={f} className="border-2 border-ink bg-paper p-4 text-sm leading-relaxed">
+                  <span className="mr-2 font-mono text-xs">▸</span>{f}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {d.metrics.length > 0 && (
+            <section className="mt-14 border-t-2 border-ink pt-10">
+              <h2 className="text-4xl font-bold md:text-5xl">By the numbers</h2>
+              <ul className="mt-8 flex flex-wrap gap-3">
+                {d.metrics.map((m) => (
+                  <li key={m} className="border-2 border-ink bg-blue px-4 py-2 font-mono text-sm font-semibold hard-shadow">{m}</li>
+                ))}
+              </ul>
+            </section>
+          )}
+        </>
+      )}
+
       {p.approach.length > 0 && (
         <section className="mt-16">
           <h2 className="text-4xl font-bold md:text-5xl">How it works</h2>
