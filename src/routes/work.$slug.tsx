@@ -1,14 +1,20 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ProjectCover } from "@/components/ProjectCard";
+import { fetchPublishedProject } from "@/lib/pb";
 import { PROJECT_DETAILS } from "@/lib/details";
 import { PROJECTS } from "@/lib/site";
 
 export const Route = createFileRoute("/work/$slug")({
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
+    const live = await fetchPublishedProject(params.slug);
+    if (live) {
+      return { project: live.project, details: live.details ?? PROJECT_DETAILS[params.slug] };
+    }
     const project = PROJECTS.find((p) => p.slug === params.slug);
     if (!project) throw notFound();
-    return { project };
+    return { project, details: PROJECT_DETAILS[params.slug] };
   },
+  staleTime: 60_000,
   head: ({ loaderData }) => {
     const p = loaderData?.project;
     const title = p ? `${p.title} — case study · Naoufal Elouahabi` : "Project not found";
@@ -34,8 +40,7 @@ export const Route = createFileRoute("/work/$slug")({
 });
 
 function CaseStudy() {
-  const { project: p } = Route.useLoaderData();
-  const d = PROJECT_DETAILS[p.slug];
+  const { project: p, details: d } = Route.useLoaderData();
   const idx = PROJECTS.findIndex((x) => x.slug === p.slug);
   const next = PROJECTS[(idx + 1) % PROJECTS.length] ?? p;
   return (

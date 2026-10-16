@@ -1,8 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ProjectCard } from "@/components/ProjectCard";
+import { fetchPublishedProjects } from "@/lib/pb";
 import { ARCHIVE, EXPLORING, PROJECTS, SITE } from "@/lib/site";
+import { PROJECT_DETAILS } from "@/lib/details";
 
 export const Route = createFileRoute("/")({
+  loader: async () =>
+    (await fetchPublishedProjects()) ?? { projects: PROJECTS, details: PROJECT_DETAILS },
+  staleTime: 60_000,
   head: () => ({
     meta: [
       { title: "Naoufal Elouahabi — Data Science & AI · EMSI" },
@@ -40,7 +45,14 @@ const ACCENT_TEXT: Record<string, string> = {
 };
 
 function Index() {
-  const FEATURED = PROJECTS.filter((p) => p.featured);
+  const { projects } = Route.useLoaderData();
+  const FEATURED = projects.filter((p) => p.featured);
+  const archiveGroups = ARCHIVE.map((group) => ({
+    ...group,
+    items: projects
+      .filter((p) => p.category === group.category)
+      .sort((a, b) => a.num.localeCompare(b.num)),
+  })).filter((g) => g.items.length > 0);
   return (
     <>
       <section className="relative overflow-hidden border-b-2 border-ink bg-blue">
@@ -90,7 +102,7 @@ function Index() {
       <section id="work" className="mx-auto max-w-6xl scroll-mt-20 px-5 py-20">
         <div className="flex items-end justify-between gap-4">
           <h2 className="text-5xl font-bold md:text-7xl">Selected work</h2>
-          <p className="hidden font-mono text-sm text-muted-foreground md:block">{PROJECTS.filter(p => p.featured).length} flagships</p>
+          <p className="hidden font-mono text-sm text-muted-foreground md:block">{FEATURED.length} flagships</p>
         </div>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURED.map((p) => (
@@ -106,18 +118,17 @@ function Index() {
             Every project I've built, grouped by category. Click through for case studies.
           </p>
           <div className="mt-12 space-y-12">
-            {ARCHIVE.map((group) => (
+            {archiveGroups.map((group) => (
               <div key={group.category}>
                 <div className="flex items-baseline gap-3 border-b-2 border-ink pb-2">
                   <span className={`inline-block h-5 w-5 shrink-0 border-2 border-ink ${ACCENT_BG[group.accent]}`} aria-hidden />
                   <h3 className="text-3xl font-bold">{group.category}</h3>
-                  <span className="font-mono text-sm text-muted-foreground">{group.slugs.length} projects</span>
+                  <span className="font-mono text-sm text-muted-foreground">{group.items.length} projects</span>
                 </div>
                 <p className="mt-2 text-sm text-muted-foreground">{group.blurb}</p>
                 <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                  {group.slugs.map((slug) => {
-                    const p = PROJECTS.find((x) => x.slug === slug);
-                    if (!p) return null;
+                  {group.items.map((p) => {
+                    const slug = p.slug;
                     return (
                       <Link
                         key={slug}
